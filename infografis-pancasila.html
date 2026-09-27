@@ -39,16 +39,11 @@
     display:flex; flex-direction:column; gap:4mm;
   }
   .page > *{position:relative; z-index:1;}
-  .page::before{
-    content:""; position:absolute; inset:0; z-index:0;
-    background-image:radial-gradient(var(--line) 0.8px, transparent 0.8px);
-    background-size:5mm 5mm; opacity:0.55; pointer-events:none;
-  }
-  /* big decorative star watermark */
+  /* faint Garuda watermark */
   .page::after{
     content:""; position:absolute; z-index:0; right:-30mm; top:70mm;
     width:130mm; height:130mm; opacity:0.06; pointer-events:none;
-    background:url("assets/garuda.svg") no-repeat center/contain; filter:grayscale(1);
+    background:url("assets/garuda.svg") no-repeat center/contain;
   }
 
   .page > .banner{position:absolute; z-index:0; left:0; right:0; bottom:0; height:50mm; background:url("assets/banner.png") center bottom/100% 100% no-repeat; opacity:0.4; pointer-events:none;}
@@ -61,8 +56,8 @@
   .title{font-family:'Fraunces',serif; font-weight:700; font-size:25px; line-height:1.02; margin:3px 0 4px;}
   .title em{font-style:italic; color:var(--red);}
   .sila-strip{display:flex; gap:6px;}
-  .sila-strip img{width:24px; height:24px; border-radius:3px; opacity:0.35; filter:grayscale(1);}
-  .sila-strip img.hit{opacity:1; filter:none; box-shadow:0 0 0 1.5px var(--paper), 0 0 0 3px var(--red);}
+  .sila-strip img{width:24px; height:24px; border-radius:3px; opacity:0.35;}
+  .sila-strip img.hit{opacity:1; box-shadow:0 0 0 1.5px var(--paper), 0 0 0 3px var(--red);}
   .identitas{text-align:left; font-size:8.6px; line-height:1.55; color:var(--navy);
     width:66mm; flex:none; border-left:1px solid var(--line); padding-left:8px;}
   .identitas b{display:block; font-size:8.5px; color:var(--red); letter-spacing:0.06em; margin-bottom:2px;}
@@ -180,20 +175,32 @@
   .footer .filename{font-family:'Fraunces',serif; font-style:italic; color:var(--red); font-size:9px;}
   .footer .rule{color:var(--navy);}
 
+  .export-btn{position:fixed; right:20px; bottom:20px; z-index:10; display:inline-flex; align-items:center; gap:8px;
+    font:600 13px/1 "Inter",sans-serif; color:var(--paper); background:var(--red); border:0; border-radius:999px;
+    padding:12px 18px; cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,0.35);}
+  .export-btn:hover{background:#8c1f30;}
+  .export-btn:focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
+
   @media print{
     body{background:none; padding:0;}
     .page{box-shadow:none; margin:0;}
+    .export-btn{display:none;}
   }
 </style>
 </head>
 <body>
 
-<!-- Lambang sila (ikon kecil, dipakai ulang) -->
+<!-- shared arrowhead marker -->
 <svg width="0" height="0" style="position:absolute">
   <defs>
     <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#29394A"/></marker>
   </defs>
 </svg>
+
+<button class="export-btn" type="button" onclick="exportPdf()" title="Di dialog cetak, pilih Save as PDF">
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>
+  Export PDF
+</button>
 
 <div class="page">
 
@@ -226,7 +233,7 @@
     </div>
   </div>
 
-  <!-- ================= STUDI KASUS ================= -->
+  <!-- ================= CASE STUDY ================= -->
   <div class="kasus-strip">
     <div class="kasus-box">
       <div class="label">STUDI KASUS</div>
@@ -428,5 +435,17 @@
 
 </div>
 
+<script>
+  // The document title becomes the default file name in the print dialog (Save as PDF); restored afterwards.
+  function exportPdf(){
+    var originalTitle = document.title;
+    document.title = document.querySelector(".filename").textContent.trim();
+    window.addEventListener("afterprint", function restore(){
+      document.title = originalTitle;
+      window.removeEventListener("afterprint", restore);
+    });
+    window.print();
+  }
+</script>
 </body>
 </html>
