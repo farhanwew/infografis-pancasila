@@ -1,451 +1,887 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Infografis Pancasila Quiz 1</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-  :root{
-    --paper:#F3EFE6;
-    --paper2:#E9E3D6;
-    --ink:#201C18;
-    --red:#A62639;
-    --red-soft:#F1DADC;
-    --gold:#B8892B;
-    --gold-soft:#F2E6CC;
-    --navy:#29394A;
-    --navy-soft:#DDE3E9;
-    --muted:#8a8478;
-    --line: rgba(32,28,24,0.16);
-  }
-  @page{size:A4; margin:0;}
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;background:#6b6862;}
-  body{
-    font-family:'Inter',sans-serif;
-    color:var(--ink);
-    display:flex; justify-content:center;
-    padding:24px 12px;
-    -webkit-print-color-adjust:exact; print-color-adjust:exact;
-  }
-  .page{
-    width:210mm; height:297mm;
-    background:var(--paper);
-    position:relative; overflow:hidden;
-    padding:8.5mm 11mm 7mm;
-    box-shadow:0 4px 24px rgba(0,0,0,0.25);
-    display:flex; flex-direction:column; gap:4mm;
-  }
-  .page > *{position:relative; z-index:1;}
-  /* faint Garuda watermark */
-  .page::after{
-    content:""; position:absolute; z-index:0; right:-30mm; top:70mm;
-    width:130mm; height:130mm; opacity:0.06; pointer-events:none;
-    background:url("assets/garuda.svg") no-repeat center/contain;
-  }
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>Infografis Pancasila Quiz 1</title>
 
-  .page > .banner{position:absolute; z-index:0; left:0; right:0; bottom:0; height:50mm; background:url("assets/banner.png") center bottom/100% 100% no-repeat; opacity:0.4; pointer-events:none;}
+    <!-- Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,600&family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  /* ---------- header ---------- */
-  .header{display:flex; justify-content:space-between; align-items:flex-end; gap:6mm;
-    border-bottom:2.5px solid var(--ink); padding-bottom:3mm;}
-  .brand{display:flex; align-items:center; gap:10px;}
-  .eyebrow{font-size:8.5px; letter-spacing:0.08em; color:var(--red); font-weight:700;}
-  .title{font-family:'Fraunces',serif; font-weight:700; font-size:25px; line-height:1.02; margin:3px 0 4px;}
-  .title em{font-style:italic; color:var(--red);}
-  .sila-strip{display:flex; gap:6px;}
-  .sila-strip img{width:24px; height:24px; border-radius:3px; opacity:0.35;}
-  .sila-strip img.hit{opacity:1; box-shadow:0 0 0 1.5px var(--paper), 0 0 0 3px var(--red);}
-  .identitas{text-align:left; font-size:8.6px; line-height:1.55; color:var(--navy);
-    width:66mm; flex:none; border-left:1px solid var(--line); padding-left:8px;}
-  .identitas b{display:block; font-size:8.5px; color:var(--red); letter-spacing:0.06em; margin-bottom:2px;}
-  .anggota{display:grid; grid-template-columns:1fr auto; column-gap:10px; row-gap:1px; font-weight:600; color:var(--ink); font-variant-numeric:tabular-nums;}
-  .anggota span{white-space:nowrap;}
-  .anggota span:nth-child(even){text-align:right;}
-  .placeholder{color:var(--muted); font-style:italic;}
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Shared Arrowhead Marker -->
+    <svg width="0" height="0" style="position: absolute">
+      <defs>
+        <marker
+          id="ah"
+          viewBox="0 0 10 10"
+          refX="8"
+          refY="5"
+          markerWidth="6"
+          markerHeight="6"
+          orient="auto-start-reverse"
+        >
+          <path d="M0 0 L10 5 L0 10 z" fill="#29394A" />
+        </marker>
+      </defs>
+    </svg>
 
-  /* ---------- case strip ---------- */
-  .kasus-strip{display:flex; gap:5mm;}
-  .kasus-box{display:flex; flex-direction:column;}
-  .kasus-box{position:relative; flex:1.9; background:var(--ink); color:var(--paper); border-radius:3px; padding:5mm 6mm 4.5mm;}
-  .label{font-size:8.5px; letter-spacing:0.08em; font-weight:700; margin-bottom:3px;}
-  .kasus-box .label{color:var(--gold);}
-  .kasus-box h2{font-family:"Fraunces",serif; font-size:14px; margin:0 0 2px; font-weight:600; line-height:1.15;}
-  .kasus-box h2 em{color:var(--gold);}
-  .kasus-box .lead{font-size:9px; line-height:1.4; margin:0 0 4mm; color:#d9d3c5;}
-  .timeline{margin-top:auto; padding-top:3mm;}
-  .timeline{display:grid; grid-template-columns:repeat(5,1fr); position:relative;}
-  .timeline::before{content:""; position:absolute; left:6px; right:10%; top:6px; height:2px;
-    background:linear-gradient(90deg,var(--gold),var(--red));}
-  .tl{position:relative; padding-top:17px; padding-right:6px;}
-  .tl::before{content:""; position:absolute; top:0; left:0; width:14px; height:14px; border-radius:50%;
-    background:var(--ink); border:2.5px solid var(--gold);}
-  .tl.alert::before{border-color:var(--red); background:var(--red);}
-  .tl b{display:block; font-size:9.5px; color:var(--gold); font-weight:700;}
-  .tl.alert b{color:#ff8f9d;}
-  .tl span{font-size:8px; line-height:1.3; color:#e9e4d8; display:block;}
-
-  .referensi-box{position:relative; flex:1.3; border:1.4px solid var(--ink); border-radius:3px; padding:5mm 5mm; background:rgba(243,239,230,0.85);}
-  .referensi-box .label{color:var(--red);}
-  .referensi-box ol{margin:0; padding:0; list-style:none; counter-reset:r;}
-  .referensi-box li{counter-increment:r; display:flex; gap:6px; font-size:7.5px; line-height:1.28; margin-bottom:4px;}
-  .referensi-box li::before{content:counter(r); flex-shrink:0; width:14px; height:14px; border-radius:3px;
-    background:var(--navy); color:var(--paper); font-size:8px; font-weight:700; display:flex; align-items:center; justify-content:center;}
-  .referensi-box li b{color:var(--ink);}
-  .referensi-box .t{font-style:normal; color:#4a443d;}
-  .referensi-box li a{display:block; margin-top:1px; color:var(--navy); font-size:5.9px; line-height:1.25; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; text-decoration:none;}
-
-  /* ---------- cards ---------- */
-  .body-grid{flex:1; display:grid; grid-template-columns:1fr 1fr; grid-template-rows:1.4fr 1fr; gap:5.5mm 5mm; min-height:0;}
-  .card{border:1.4px solid var(--ink); border-radius:3px; padding:6mm 5.5mm 8mm; position:relative;
-    display:flex; flex-direction:column; background:rgba(243,239,230,0.9);}
-  .card .num{font-family:'Fraunces',serif; font-size:12px; color:var(--paper); background:var(--red);
-    width:22px; height:22px; display:flex; align-items:center; justify-content:center; border-radius:50%;
-    position:absolute; top:-11px; left:5.5mm; font-weight:700; box-shadow:0 0 0 3px var(--paper);}
-  .card h3{font-family:'Fraunces',serif; font-size:14px; font-weight:700; margin:2px 0 1px; line-height:1.15;}
-  .card .sub{font-size:8.3px; color:var(--navy); margin:0 0 3mm; line-height:1.35;}
-  .pic-tag{position:absolute; bottom:-8px; right:5.5mm; font-size:7.8px; letter-spacing:0.03em;
-    color:var(--paper); background:var(--navy); padding:3px 9px; border-radius:10px; font-weight:600;
-    box-shadow:0 0 0 3px var(--paper);}
-  .pic-tag .placeholder{color:#cfd8e0; font-weight:400;}
-  svg text{font-family:'Inter',sans-serif;}
-
-  /* card 1 */
-  .dialektika{width:100%; height:auto; display:block; margin:auto 0;}
-  .points{list-style:none; margin:2mm 0 0; padding:0; display:grid; gap:4px;}
-  .points li{display:flex; gap:6px; align-items:flex-start; font-size:8.4px; line-height:1.35;}
-  .points .tag{flex-shrink:0; display:inline-flex; align-items:center; gap:4px; font-size:7.5px; font-weight:700; padding:2px 5px; border-radius:3px; color:var(--paper); min-width:52px;}
-  .points .tag img{width:12px; height:12px; border-radius:2px;}
-
-  .thesis{margin:3mm 0 0; padding:2mm 3mm; border-left:3px solid var(--gold); background:var(--gold-soft); font-family:"Fraunces",serif; font-style:italic; font-size:9px; line-height:1.35;}
-  .thesis cite{display:block; margin-top:1px; text-align:right; font:normal 7.2px/1.3 "Inter",sans-serif; color:var(--navy);}
-
-  /* card 2 */
-  .flow{display:flex; flex-direction:column; justify-content:space-around; flex:1;}
-  .step{display:grid; grid-template-columns:30px 1fr; gap:8px; align-items:center; position:relative; padding:3px 0;}
-  .flow{position:relative;} .flow::before{content:""; position:absolute; left:14px; top:12%; bottom:12%; width:2px;
-    background:repeating-linear-gradient(var(--navy) 0 3px, transparent 3px 5px);}
-  .step .ic{width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; position:relative; z-index:1;}
-  .step h4{margin:0; font-size:9.5px; font-weight:700;}
-  .step p{margin:1px 0 0; font-size:8px; line-height:1.3; color:#4a443d;}
-  .meter{font-size:7.5px; font-weight:700; color:var(--red); text-align:right; white-space:nowrap;}
-  .meter i{display:block; height:5px; border-radius:3px; background:var(--red-soft); margin-top:2px; width:44px; overflow:hidden;}
-  .meter i::before{content:""; display:block; height:100%; background:var(--red); width:var(--v);}
-  .polar{margin-top:3mm; display:grid; grid-template-columns:1fr 34px 1fr; align-items:center; gap:4px;}
-  .camp{border-radius:3px; padding:4px 6px; font-size:8px; line-height:1.25; font-weight:600; text-align:center;}
-  .camp small{display:block; font-weight:400; font-size:7.3px; opacity:0.85;}
-  .camp.a{background:var(--navy); color:var(--paper);}
-  .camp.b{background:var(--red); color:var(--paper);}
-
-  /* card 3 */
-  .card.aksi{grid-column:1 / span 2; background:rgba(243,239,230,0.45);}
-  .aksi-top{display:flex; gap:5mm; align-items:stretch; margin-bottom:3.5mm;}
-  .idea{flex:1; background:var(--ink); color:var(--paper); border-radius:3px; padding:3.5mm 4.5mm; display:flex; gap:10px; align-items:center;}
-  .idea b{font-family:'Fraunces',serif; font-size:13px; color:var(--gold); display:block; line-height:1.1;}
-  .idea span{display:block;}
-  .idea span{font-size:8.3px; line-height:1.35; color:#e9e4d8;}
-  .shift{width:62mm; flex-shrink:0; font-size:8px;}
-  .shift .bar{display:flex; align-items:center; gap:5px; margin-top:3px;}
-  .shift .pill{padding:3px 7px; border-radius:10px; font-weight:700; font-size:8px;}
-  .pipeline{display:grid; grid-template-columns:1fr 14px 1fr 14px 1fr 14px 1.15fr; align-items:stretch; flex:1;}
-  .pipe{border:1.2px solid var(--ink); border-radius:3px; padding:3mm 3mm 2.5mm; background:var(--paper); display:flex; flex-direction:column; gap:3px;}
-  .pipe .top{display:flex; align-items:center; gap:6px;}
-  .pipe .top em{font-style:normal; font-size:7.3px; font-weight:700; color:var(--muted); letter-spacing:0.06em;}
-  .pipe h4{margin:0; font-size:9.5px; font-weight:700; line-height:1.15;}
-  .pipe p{margin:0; font-size:7.9px; line-height:1.3; color:#4a443d;}
-  .combo{display:flex; align-items:center; gap:2px; margin-top:2px; font-size:7px; white-space:nowrap; font-weight:700; color:var(--muted);}
-  .combo .k{background:var(--ink); color:var(--paper); padding:1px 4px; border-radius:3px;}
-  .combo .flag{background:var(--red); color:var(--paper); padding:1px 4px; border-radius:3px;}
-  .arrow{display:flex; align-items:center; justify-content:center;}
-  .pipe.end{padding:0; overflow:hidden; border-color:var(--ink);}
-  .pipe.end div{flex:1; padding:2mm 3mm; display:flex; align-items:center; gap:6px; font-size:8px; line-height:1.25;}
-  .pipe.end .ok{background:var(--navy-soft);}
-  .pipe.end .no{background:var(--red-soft); border-top:1.2px dashed var(--ink);}
-  .pipe.end b{display:block; font-size:9px;}
-  .basis{display:flex; gap:6px; margin-top:3mm; align-items:center; font-size:8px; color:var(--navy);}
-  .basis .chip{display:inline-flex; align-items:center; gap:4px; background:var(--gold-soft); border:1px solid var(--gold);
-    padding:2px 7px 2px 3px; border-radius:10px; font-weight:600; color:var(--ink);}
-  .basis .chip img{width:15px; height:15px; border-radius:50%; object-fit:cover;}
-
-  /* ---------- footer ---------- */
-  .footer{display:flex; justify-content:space-between; align-items:center; border-top:1px solid var(--line);
-    padding-top:2.5mm; font-size:7.5px; color:var(--navy);}
-  .footer .filename{font-family:'Fraunces',serif; font-style:italic; color:var(--red); font-size:9px;}
-  .footer .rule{color:var(--navy);}
-
-  .export-btn{position:fixed; right:20px; bottom:20px; z-index:10; display:inline-flex; align-items:center; gap:8px;
-    font:600 13px/1 "Inter",sans-serif; color:var(--paper); background:var(--red); border:0; border-radius:999px;
-    padding:12px 18px; cursor:pointer; box-shadow:0 4px 14px rgba(0,0,0,0.35);}
-  .export-btn:hover{background:#8c1f30;}
-  .export-btn:focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
-
-  @media print{
-    body{background:none; padding:0;}
-    .page{box-shadow:none; margin:0;}
-    .export-btn{display:none;}
-  }
-</style>
-</head>
-<body>
-
-<!-- shared arrowhead marker -->
-<svg width="0" height="0" style="position:absolute">
-  <defs>
-    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#29394A"/></marker>
-  </defs>
-</svg>
-
-<button class="export-btn" type="button" onclick="exportPdf()" title="Di dialog cetak, pilih Save as PDF">
-  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16"/></svg>
-  Export PDF
-</button>
-
-<div class="page">
-
-  <div class="banner" role="img" aria-label="Booth Newport di The Sounds Project"></div>
-
-  <!-- ================= HEADER ================= -->
-  <div class="header">
-    <div class="brand">
-      <img src="assets/garuda.svg" alt="Garuda Pancasila" width="54" height="58" style="object-fit:contain">
-      <div>
-        <div class="eyebrow">QUIZ 1 · ANALISIS PANCASILA</div>
-        <h1 class="title">Nalar Digital &amp; <em>Dialektika</em> Pancasila</h1>
-        <div class="sila-strip" title="Sila yang terdampak disorot merah">
-          <img class="hit" src="assets/sila1.svg" alt="Sila 1">
-          <img class="hit" src="assets/sila2.svg" alt="Sila 2">
-          <img class="hit" src="assets/sila3.svg" alt="Sila 3">
-          <img src="assets/sila4.svg" alt="Sila 4">
-          <img src="assets/sila5.svg" alt="Sila 5">
-        </div>
-      </div>
-    </div>
-    <div class="identitas">
-      <b>KELOMPOK &amp; ANGGOTA</b>
-      <div class="anggota">
-        <span>Imam Muhammad Diponegoro</span><span>5054231018</span>
-        <span>Faiz Muhammad Kautsar</span><span>5054231013</span>
-        <span>Ahnaf Tsabit Attaqi</span><span>5054231012</span>
-        <span>Muhammad Farhan Arya Wicaksono</span><span>5054231011</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- ================= CASE STUDY ================= -->
-  <div class="kasus-strip">
-    <div class="kasus-box">
-      <div class="label">STUDI KASUS</div>
-      <h2>Hafalan Al-Qur'an <em>Ditukar Miras</em> — Booth Newport</h2>
-      <p class="lead">Di festival <i>The Sounds Project</i> (Eco Park Ancol, Jakarta Utara), booth Newport membuat "challenge": lancar hafal QS Ad-Dhuha → dapat sebotol miras.</p>
-      <div class="timeline">
-        <div class="tl"><b>9 Agu</b><span>"Challenge" hafalan di booth Newport</span></div>
-        <div class="tl"><b>Viral</b><span>Video beredar luas di media sosial</span></div>
-        <div class="tl alert"><b>11 Agu</b><span>Massa datangi rumah yang dikira milik MC</span></div>
-        <div class="tl alert"><b>12 Agu</b><span>MC (RES) &amp; AK ditangkap</span></div>
-        <div class="tl alert"><b>13 Agu</b><span>Polda tetapkan 4 tersangka (Pasal 300/301 KUHP)</span></div>
-      </div>
-      <div class="pic-tag">PIC: <span class="placeholder">[Nama]</span></div>
-    </div>
-    <div class="referensi-box">
-      <div class="label">REFERENSI</div>
-      <ol>
-        <li><div><b>CNN Indonesia</b> — <span class="t">Polisi Tetapkan 4 Tersangka Kasus Challenge Hafalan Qur'an Tukar Miras</span> <i>· 13 Agu 2026</i><a href="https://www.cnnindonesia.com/nasional/20260813184538-12-1391990/polisi-tetapkan-4-tersangka-kasus-challenge-hafalan-quran-tukar-miras">cnnindonesia.com/nasional/20260813184538-12-1391990/…</a></div></li>
-        <li><div><b>detikPop</b> — <span class="t">Petaka Hafalan Surat Al-Quran Tukar Miras di The Sounds Project yang Berujung Pidana</span> <i>· 15 Agu 2026</i><a href="https://www.detik.com/pop/music/d-8618679/petaka-hafalan-surat-al-quran-tukar-miras-di-the-sounds-project-yang-berujung-pidana">detik.com/pop/music/d-8618679/…</a></div></li>
-        <li><div><b>kumparanNEWS</b> — <span class="t">Rumah MC Challenge Al-Quran Berhadiah Miras Didatangi Massa, Dibubarkan Polisi</span> <i>· 12 Agu 2026</i><a href="https://kumparan.com/kumparannews/rumah-mc-challenge-al-quran-berhadiah-miras-didatangi-massa-dibubarkan-polisi-27yH01JJONF">kumparan.com/kumparannews/…-27yH01JJONF</a></div></li>
-        <li><div><b>Tirto</b> — <span class="t">Kasus Promosi Miras: Pengingat Jaga Etika di Ruang Publik</span> <i>· 18 Agu 2026</i><a href="https://tirto.id/kasus-promosi-miras-pengingat-jaga-etika-di-ruang-publik-hBfJ">tirto.id/kasus-promosi-miras-pengingat-jaga-etika-di-ruang-publik-hBfJ</a></div></li>
-      </ol>
-      <div class="pic-tag">PIC: <span class="placeholder">[Nama]</span></div>
-    </div>
-  </div>
-
-  <!-- ================= BODY ================= -->
-  <div class="body-grid">
-
-    <!-- CARD 1 -->
-    <div class="card">
-      <div class="num">1</div>
-      <h3>Nilai &amp; Dialektika Pancasila</h3>
-      <p class="sub">Bukan sekadar menyebut sila — bedah keterkaitan &amp; benturannya.</p>
-
-      <svg class="dialektika" viewBox="0 0 300 162">
-        <!-- links -->
-        <path d="M128 50 L72 104" stroke="#A62639" stroke-width="2" stroke-dasharray="5 4" fill="none"/>
-        <path d="M172 50 L222 98" stroke="#29394A" stroke-width="2" fill="none" marker-end="url(#ah)"/>
-        <path d="M84 122 L212 122" stroke="#29394A" stroke-width="1.6" fill="none" marker-end="url(#ah)"/>
-        <!-- link labels -->
-        <rect x="40" y="56" width="58" height="15" rx="7.5" fill="#A62639"/>
-        <text x="69" y="66.5" text-anchor="middle" font-size="7.5" font-weight="700" fill="#F3EFE6">⚡ benturan</text>
-        <text x="56" y="82" text-anchor="middle" font-size="6.8" fill="#A62639" font-style="italic">sakralitas ↔ hiburan</text>
-        <rect x="200" y="62" width="50" height="15" rx="7.5" fill="#29394A"/>
-        <text x="225" y="72.5" text-anchor="middle" font-size="7.5" font-weight="700" fill="#F3EFE6">berimbas</text>
-        <!-- Sila 1 -->
-        <circle cx="150" cy="34" r="27" fill="#F1DADC" stroke="#A62639" stroke-width="2.4"/>
-        <clipPath id="c1"><circle cx="150" cy="34" r="19"/></clipPath>
-        <image href="assets/sila1.svg" x="131" y="15" width="38" height="38" preserveAspectRatio="xMidYMid slice" clip-path="url(#c1)"/>
-        <rect x="178" y="14" width="52" height="14" rx="2" fill="#A62639"/>
-        <text x="204" y="24" text-anchor="middle" font-size="7.3" font-weight="700" fill="#F3EFE6">DILANGGAR</text>
-        <text x="204" y="40" text-anchor="middle" font-size="8.5" font-weight="700" fill="#201C18">Sila 1</text>
-        <text x="204" y="50" text-anchor="middle" font-size="7.3" fill="#29394A">Ketuhanan</text>
-        <!-- Sila 2 -->
-        <circle cx="60" cy="122" r="21" fill="#DDE3E9" stroke="#29394A" stroke-width="2"/>
-        <clipPath id="c2"><circle cx="60" cy="122" r="14.5"/></clipPath>
-        <image href="assets/sila2.svg" x="45.5" y="107.5" width="29" height="29" preserveAspectRatio="xMidYMid slice" clip-path="url(#c2)"/>
-        <text x="60" y="156" text-anchor="middle" font-size="8.5" font-weight="700" fill="#201C18">Sila 2 <tspan font-weight="400" font-size="7.3" fill="#29394A">Kemanusiaan</tspan></text>
-        <!-- Sila 3 -->
-        <circle cx="240" cy="122" r="21" fill="#F2E6CC" stroke="#B8892B" stroke-width="2"/>
-        <clipPath id="c3"><circle cx="240" cy="122" r="14.5"/></clipPath>
-        <image href="assets/sila3.svg" x="225.5" y="107.5" width="29" height="29" preserveAspectRatio="xMidYMid slice" clip-path="url(#c3)"/>
-        <text x="240" y="156" text-anchor="middle" font-size="8.5" font-weight="700" fill="#201C18">Sila 3 <tspan font-weight="400" font-size="7.3" fill="#29394A">Persatuan</tspan></text>
-        <!-- center caption -->
-        <text x="148" y="116" text-anchor="middle" font-size="7" fill="#29394A" font-style="italic">massa bergerak → kohesi terkoyak</text>
+    <!-- Export PDF Action Button -->
+    <button
+      class="export-btn"
+      type="button"
+      onclick="exportPdf()"
+      title="Di dialog cetak, pilih Save as PDF"
+    >
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2.4"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      >
+        <path d="M12 3v12m0 0l-5-5m5 5l5-5M4 21h16" />
       </svg>
+      Export PDF
+    </button>
 
-      <ul class="points">
-        <li><span class="tag" style="background:var(--red)"><img src="assets/sila1.svg" alt="">SILA 1</span><span>QS Ad-Dhuha direduksi jadi <b>gimmick &amp; alat tukar</b> promosi miras.</span></li>
-        <li><span class="tag" style="background:var(--navy)"><img src="assets/sila2.svg" alt="">SILA 2</span><span>Kebebasan berekspresi &amp; hiburan <b>tanpa adab</b> terhadap sakralitas agama lain.</span></li>
-        <li><span class="tag" style="background:var(--gold)"><img src="assets/sila3.svg" alt="">SILA 3</span><span>Massa mendatangi rumah yang dikira milik MC: <b>kohesi &amp; ketertiban</b> terkoyak.</span></li>
-      </ul>
-      <p class="thesis">Hiburan tidak menghapus kewajiban etis: persatuan di ruang publik majemuk mensyaratkan <b>batas etis</b> dalam promosi.<cite>— Ika Idris, Monash (Tirto)</cite></p>
-      <div class="pic-tag">PIC: <span class="placeholder">[Nama]</span></div>
+    <!-- ========================================================
+       A4 PAGE CONTAINER
+       ======================================================== -->
+    <div class="page">
+      <!-- Bottom Background Photo Banner -->
+      <div
+        class="banner"
+        role="img"
+        aria-label="Booth Newport di The Sounds Project"
+      ></div>
+
+      <!-- ========================================================
+         HEADER: Title, Sila Indicator, Team Members
+         ======================================================== -->
+      <header class="header">
+        <div class="brand">
+          <img
+            class="garuda-logo"
+            src="assets/garuda.svg"
+            alt="Garuda Pancasila"
+            width="54"
+            height="58"
+          />
+          <div>
+            <div class="eyebrow">QUIZ 1 · ANALISIS PANCASILA</div>
+            <h1 class="title">
+              Nalar Digital &amp; <em>Dialektika</em> Pancasila
+            </h1>
+            <div class="sila-strip" title="Sila yang terdampak disorot merah">
+              <img class="hit" src="assets/sila1.svg" alt="Sila 1" />
+              <img class="hit" src="assets/sila2.svg" alt="Sila 2" />
+              <img class="hit" src="assets/sila3.svg" alt="Sila 3" />
+              <img src="assets/sila4.svg" alt="Sila 4" />
+              <img src="assets/sila5.svg" alt="Sila 5" />
+            </div>
+          </div>
+        </div>
+
+        <div class="identitas">
+          <b>KELOMPOK &amp; ANGGOTA</b>
+          <div class="anggota">
+            <span>Imam Muhammad Diponegoro</span><span>5054231018</span>
+            <span>Faiz Muhammad Kautsar</span><span>5054231013</span>
+            <span>Ahnaf Tsabit Attaqi</span><span>5054231012</span>
+            <span>Muhammad Farhan Arya Wicaksono</span><span>5054231011</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- ========================================================
+         CASE STUDY & REFERENCES
+         ======================================================== -->
+      <section class="kasus-strip">
+        <!-- Case Study Summary & Timeline -->
+        <article class="kasus-box">
+          <div class="label">STUDI KASUS</div>
+          <h2>Hafalan Al-Qur'an <em>Ditukar Miras</em></h2>
+          <p class="lead">
+            Di festival <i>The Sounds Project</i> (Eco Park Ancol, Jakarta
+            Utara), booth Newport membuat "challenge": lancar hafal QS Ad-Dhuha
+            akan dapat sebotol miras.
+          </p>
+
+          <div class="timeline">
+            <div class="tl">
+              <b>9 Agu</b>
+              <span>"Challenge" hafalan di booth Newport</span>
+            </div>
+            <div class="tl">
+              <b>Viral</b>
+              <span>Video beredar luas di media sosial</span>
+            </div>
+            <div class="tl alert">
+              <b>11 Agu</b>
+              <span>Massa datangi rumah yang dikira milik MC</span>
+            </div>
+            <div class="tl alert">
+              <b>12 Agu</b>
+              <span>MC (RES) &amp; AK ditangkap</span>
+            </div>
+            <div class="tl alert">
+              <b>13 Agu</b>
+              <span>Polda tetapkan 4 tersangka (Pasal 300/301 KUHP)</span>
+            </div>
+          </div>
+
+          <div class="pic-tag">
+            PIC: <span class="placeholder">[Nama]</span>
+          </div>
+        </article>
+
+        <!-- References Box -->
+        <aside class="referensi-box">
+          <div class="label">REFERENSI</div>
+          <ol>
+            <li>
+              <div>
+                <b>CNN Indonesia</b> —
+                <span class="t"
+                  >Polisi Tetapkan 4 Tersangka Kasus Challenge Hafalan Qur'an
+                  Tukar Miras</span
+                >
+                <i>· 13 Agu 2026</i>
+                <a
+                  href="https://www.cnnindonesia.com/nasional/20260813184538-12-1391990/polisi-tetapkan-4-tersangka-kasus-challenge-hafalan-quran-tukar-miras"
+                  >cnnindonesia.com/nasional/20260813184538-12-1391990/…</a
+                >
+              </div>
+            </li>
+            <li>
+              <div>
+                <b>detikPop</b> —
+                <span class="t"
+                  >Petaka Hafalan Surat Al-Quran Tukar Miras di The Sounds
+                  Project yang Berujung Pidana</span
+                >
+                <i>· 15 Agu 2026</i>
+                <a
+                  href="https://www.detik.com/pop/music/d-8618679/petaka-hafalan-surat-al-quran-tukar-miras-di-the-sounds-project-yang-berujung-pidana"
+                  >detik.com/pop/music/d-8618679/…</a
+                >
+              </div>
+            </li>
+            <li>
+              <div>
+                <b>kumparanNEWS</b> —
+                <span class="t"
+                  >Rumah MC Challenge Al-Quran Berhadiah Miras Didatangi Massa,
+                  Dibubarkan Polisi</span
+                >
+                <i>· 12 Agu 2026</i>
+                <a
+                  href="https://kumparan.com/kumparannews/rumah-mc-challenge-al-quran-berhadiah-miras-didatangi-massa-dibubarkan-polisi-27yH01JJONF"
+                  >kumparan.com/kumparannews/…-27yH01JJONF</a
+                >
+              </div>
+            </li>
+            <li>
+              <div>
+                <b>Tirto</b> —
+                <span class="t"
+                  >Kasus Promosi Miras: Pengingat Jaga Etika di Ruang
+                  Publik</span
+                >
+                <i>· 18 Agu 2026</i>
+                <a
+                  href="https://tirto.id/kasus-promosi-miras-pengingat-jaga-etika-di-ruang-publik-hBfJ"
+                  >tirto.id/kasus-promosi-miras-pengingat-jaga-etika-di-ruang-publik-hBfJ</a
+                >
+              </div>
+            </li>
+          </ol>
+          <div class="pic-tag">
+            PIC: <span class="placeholder">[Nama]</span>
+          </div>
+        </aside>
+      </section>
+
+      <!-- ========================================================
+         BODY GRID (3 CARDS)
+         ======================================================== -->
+      <main class="body-grid">
+        <!-- CARD 1: Nilai & Dialektika Pancasila -->
+        <section class="card">
+          <div class="num">1</div>
+          <h3>Nilai &amp; Dialektika Pancasila</h3>
+          <p class="sub">
+            Interaksi antara komponen pancasila dalam kasus ini adalah sebagai
+            berikut:
+          </p>
+
+          <!-- SVG Diagram: Dialektika Hubungan Sila -->
+          <svg class="dialektika" viewBox="0 0 300 162">
+            <!-- Links & Arrows -->
+            <path
+              d="M128 50 L72 104"
+              stroke="#A62639"
+              stroke-width="2"
+              stroke-dasharray="5 4"
+              fill="none"
+            />
+            <path
+              d="M172 50 L222 98"
+              stroke="#29394A"
+              stroke-width="2"
+              fill="none"
+              marker-end="url(#ah)"
+            />
+            <path
+              d="M84 122 L212 122"
+              stroke="#29394A"
+              stroke-width="1.6"
+              fill="none"
+              marker-end="url(#ah)"
+            />
+
+            <!-- Link Badges & Labels -->
+            <g transform="rotate(-44 84 68)">
+              <rect
+                x="55"
+                y="51"
+                width="58"
+                height="15"
+                rx="7.5"
+                fill="#A62639"
+              />
+              <text
+                x="84"
+                y="61.5"
+                text-anchor="middle"
+                font-size="7.5"
+                font-weight="700"
+                fill="#F3EFE6"
+              >
+                ⚡ benturan
+              </text>
+              <text
+                x="84"
+                y="74.5"
+                text-anchor="middle"
+                font-size="6.8"
+                fill="#A62639"
+                font-style="italic"
+              >
+                sakralitas ↔ hiburan
+              </text>
+            </g>
+
+            <g transform="rotate(44 206 66)">
+              <rect
+                x="181"
+                y="58.5"
+                width="50"
+                height="15"
+                rx="7.5"
+                fill="#29394A"
+              />
+              <text
+                x="206"
+                y="69"
+                text-anchor="middle"
+                font-size="7.5"
+                font-weight="700"
+                fill="#F3EFE6"
+              >
+                berimbas
+              </text>
+            </g>
+
+            <!-- Sila 1 (Ketuhanan - Dilanggar) -->
+            <circle
+              cx="150"
+              cy="34"
+              r="27"
+              fill="#F1DADC"
+              stroke="#A62639"
+              stroke-width="2.4"
+            />
+            <clipPath id="c1"><circle cx="150" cy="34" r="19" /></clipPath>
+            <image
+              href="assets/sila1.svg"
+              x="124"
+              y="8"
+              width="52"
+              height="52"
+              preserveAspectRatio="xMidYMid slice"
+              clip-path="url(#c1)"
+            />
+            <text
+              x="204"
+              y="30"
+              text-anchor="middle"
+              font-size="8.5"
+              font-weight="700"
+              fill="#201C18"
+            >
+              Sila 1
+            </text>
+            <text
+              x="204"
+              y="40"
+              text-anchor="middle"
+              font-size="7.3"
+              fill="#29394A"
+            >
+              Ketuhanan
+            </text>
+
+            <!-- Sila 2 (Kemanusiaan) -->
+            <circle
+              cx="60"
+              cy="122"
+              r="21"
+              fill="#DDE3E9"
+              stroke="#29394A"
+              stroke-width="2"
+            />
+            <clipPath id="c2"><circle cx="60" cy="122" r="14.5" /></clipPath>
+            <image
+              href="assets/sila2.svg"
+              x="43.5"
+              y="105.5"
+              width="33"
+              height="33"
+              preserveAspectRatio="xMidYMid slice"
+              clip-path="url(#c2)"
+            />
+            <text
+              x="60"
+              y="156"
+              text-anchor="middle"
+              font-size="8.5"
+              font-weight="700"
+              fill="#201C18"
+            >
+              Sila 2
+              <tspan font-weight="400" font-size="7.3" fill="#29394A">
+                Kemanusiaan
+              </tspan>
+            </text>
+
+            <!-- Sila 3 (Persatuan) -->
+            <circle
+              cx="240"
+              cy="122"
+              r="21"
+              fill="#F2E6CC"
+              stroke="#B8892B"
+              stroke-width="2"
+            />
+            <clipPath id="c3"><circle cx="240" cy="122" r="14.5" /></clipPath>
+            <image
+              href="assets/sila3.svg"
+              x="220"
+              y="102"
+              width="40"
+              height="40"
+              preserveAspectRatio="xMidYMid slice"
+              clip-path="url(#c3)"
+            />
+            <text
+              x="240"
+              y="156"
+              text-anchor="middle"
+              font-size="8.5"
+              font-weight="700"
+              fill="#201C18"
+            >
+              Sila 3
+              <tspan font-weight="400" font-size="7.3" fill="#29394A">
+                Persatuan
+              </tspan>
+            </text>
+
+            <!-- Center Diagram Caption -->
+            <text
+              x="144"
+              y="116"
+              text-anchor="middle"
+              font-size="7"
+              fill="#29394A"
+              font-style="italic"
+            >
+              massa bergerak → hilangnya kohesi
+            </text>
+          </svg>
+
+          <!-- Points List -->
+          <ul class="points">
+            <li>
+              <span class="tag tag-red"
+                ><img src="assets/sila1.svg" alt="" />SILA 1</span
+              >
+              <span
+                >QS Ad-Dhuha direduksi jadi
+                <b>gimmick dan alat tukar</b> promosi miras.</span
+              >
+            </li>
+            <li>
+              <span class="tag tag-navy"
+                ><img src="assets/sila2.svg" alt="" />SILA 2</span
+              >
+              <span
+                >Kebebasan berekspresi dan hiburan dilakukan
+                <b>tanpa memperhatikan adab</b> terhadap sakralitas agama
+                lain.</span
+              >
+            </li>
+            <li>
+              <span class="tag tag-gold"
+                ><img src="assets/sila3.svg" alt="" />SILA 3</span
+              >
+              <span
+                >Massa mendatangi rumah yang dikira milik MC, akibatnya
+                <b>kohesi dan ketertiban</b> terkoyak.</span
+              >
+            </li>
+          </ul>
+
+          <!-- Thesis / Quote Box -->
+          <p class="thesis">
+            Promosi seharusnya tetap berpegang pada prinsip dasar etika
+            komunikasi, yakni kejujuran, rasa hormat, keadilan, dan tanggung
+            jawab.
+            <cite>— Ika Idris, Monash (Tirto)</cite>
+          </p>
+
+          <div class="pic-tag">PIC: <span class="placeholder">Dipo</span></div>
+        </section>
+
+        <!-- CARD 2: Dekonstruksi Arsitektur Digital -->
+        <section class="card">
+          <div class="num">2</div>
+          <h3>Dekonstruksi Arsitektur Digital</h3>
+          <p class="sub">Mengapa fenomena ini bisa marak secara sistemik?</p>
+
+          <!-- 5-Step Digital Architecture Flow -->
+          <div class="flow">
+            <!-- Step 1 -->
+            <div class="step">
+              <div class="ic ic-ink">
+                <svg width="16" height="16" viewBox="0 0 24 24">
+                  <rect
+                    x="3"
+                    y="6"
+                    width="13"
+                    height="12"
+                    rx="2"
+                    fill="#F3EFE6"
+                  />
+                  <path d="M16 10l5-3v10l-5-3z" fill="#B8892B" />
+                </svg>
+              </div>
+              <div>
+                <h4>Kurangnya konteks</h4>
+                <p>
+                  "Challenge" sendiri diadakan oleh Oknum yang bukan merupakan
+                  bagian petugas resmi <i>booth</i>; petugas justru membiarkan
+                  terjadi, dengan alasan spontanitas.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="step">
+              <div class="ic ic-red">
+                <svg width="16" height="16" viewBox="0 0 24 24">
+                  <path d="M3 4h18v12H9l-5 4v-4H3z" fill="#F3EFE6" />
+                  <rect
+                    x="11"
+                    y="6.5"
+                    width="2.2"
+                    height="5.5"
+                    fill="#A62639"
+                  />
+                  <rect x="11" y="13" width="2.2" height="2" fill="#A62639" />
+                </svg>
+              </div>
+              <div>
+                <h4>Amplifikasi algoritma</h4>
+                <p>
+                  Emosi tinggi justru diprioritaskan: komentar, share, & quote
+                  menyebar secara eksponensial.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="step">
+              <div class="ic ic-gold">
+                <svg
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="#201C18"
+                  stroke-width="2"
+                >
+                  <circle cx="5" cy="12" r="2.2" fill="#201C18" />
+                  <path d="M9 8a5.5 5.5 0 0 1 0 8" />
+                  <path d="M12.5 5a9.5 9.5 0 0 1 0 14" />
+                  <path d="M16 2.5a13 13 0 0 1 0 19" />
+                </svg>
+              </div>
+              <div>
+                <h4>Echo chamber</h4>
+                <p>
+                  Berbagai akun dakwah dan komunitas gosip memvalidasi kemarahan
+                  satu sama lain dengan narasi tanpa konteks yang menyeluruh.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 4 -->
+            <div class="step">
+              <div class="ic ic-navy">
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                  <circle cx="9" cy="8" r="3.2" fill="#F3EFE6" />
+                  <path
+                    d="M3 19c.6-3.6 3-5.4 6-5.4s5.4 1.8 6 5.4z"
+                    fill="#F3EFE6"
+                  />
+                  <circle
+                    cx="18"
+                    cy="8"
+                    r="3.6"
+                    fill="none"
+                    stroke="#B8892B"
+                    stroke-width="1.8"
+                  />
+                  <path
+                    d="M20.6 10.6L23 13"
+                    stroke="#B8892B"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h4>Vigilantisme digital</h4>
+                <p>
+                  Akibatnya massa mendatangi rumah yang dikira milik MC, di mana
+                  ternyata merupakan rumah mendiang orang tuanya.
+                </p>
+              </div>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="step">
+              <div class="ic ic-ink">
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                  <circle
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    fill="none"
+                    stroke="#F3EFE6"
+                    stroke-width="1.6"
+                    stroke-dasharray="3 2"
+                  />
+                  <circle cx="12" cy="9.5" r="3" fill="#F3EFE6" />
+                  <path
+                    d="M6.5 17.5c1-3 3-4.2 5.5-4.2s4.5 1.2 5.5 4.2"
+                    fill="#F3EFE6"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h4>Filter bubble</h4>
+                <p>
+                  Di sini terlihat bahwa tiap kubu hanya melihat narasi yang
+                  menguatkan sikapnya.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Polarization Indicator -->
+          <div class="polar">
+            <div class="camp a">
+              Ekosistem festival<small>"cuma spontanitas"</small>
+            </div>
+            <svg width="34" height="24" viewBox="0 0 34 24">
+              <path
+                d="M14 12H3M20 12h11"
+                stroke="#201C18"
+                stroke-width="1.8"
+                marker-end="url(#ah)"
+              />
+              <path
+                d="M17 3l-3 8h5l-3 10"
+                fill="none"
+                stroke="#A62639"
+                stroke-width="1.8"
+                stroke-linejoin="round"
+              />
+            </svg>
+            <div class="camp b">
+              Masyarakat luas<small>"penistaan agama"</small>
+            </div>
+          </div>
+          <p class="polar-desc">
+            <b>Polarisasi</b> diakibatkan oleh platform yang terus mempertemukan
+            dua sentimen ekstrem demi <i>engagement</i> semata.
+          </p>
+
+          <div class="pic-tag">
+            PIC: <span class="placeholder">[Nama]</span>
+          </div>
+        </section>
+
+        <!-- CARD 3: Gagasan “Pancasila dalam Aksi” -->
+        <section class="card aksi">
+          <div class="num">3</div>
+          <h3>Gagasan: “Pancasila dalam Aksi”</h3>
+          <p class="sub">
+            Sebuah prosedur yang kami usulkan dalam antisipasi peristiwa serupa
+            di masa depan, adalah sebagai berikut:
+          </p>
+
+          <!-- Top Row: Idea Banner & Mitigation Shift -->
+          <div class="aksi-top">
+            <div class="idea">
+              <svg width="34" height="34" viewBox="0 0 24 24">
+                <path
+                  d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z"
+                  fill="#B8892B"
+                />
+                <path
+                  d="M8 12l3 3 5-6"
+                  fill="none"
+                  stroke="#201C18"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+              <div>
+                <b>Cek Sensitivitas Konten Acara</b>
+                <span
+                  >Syarat tambahan izin keramaian: konten acara diperiksa dulu
+                  sebelum izin terbit. Kini ahli bahasa, MUI &amp; Kemenag baru
+                  dilibatkan polisi setelah kasus pecah (detikPop).</span
+                >
+              </div>
+            </div>
+
+            <div class="shift">
+              <b class="shift-title">PERUBAHAN MITIGASI</b>
+              <div class="bar">
+                <span class="pill pill-reaktif">Reaktif</span>
+                <svg width="40" height="10" viewBox="0 0 40 10">
+                  <path
+                    d="M1 5h34"
+                    stroke="#29394A"
+                    stroke-width="2"
+                    marker-end="url(#ah)"
+                  />
+                </svg>
+                <span class="pill pill-preventif">Preventif</span>
+              </div>
+              <div class="basis">
+                <span class="chip"
+                  ><span class="chip-ic"
+                    ><img src="assets/sila4.svg" alt="" /></span
+                  >Sila 4 · musyawarah</span
+                >
+                <span class="chip"
+                  ><span class="chip-ic"
+                    ><img src="assets/sila5.svg" alt="" /></span
+                  >Sila 5 · keadilan</span
+                >
+              </div>
+            </div>
+          </div>
+
+          <!-- 4-Stage Action Pipeline -->
+          <div class="pipeline">
+            <!-- Step 1 -->
+            <div class="pipe">
+              <div class="top">
+                <svg width="22" height="22" viewBox="0 0 24 24">
+                  <path
+                    d="M5 2h10l4 4v16H5z"
+                    fill="#DDE3E9"
+                    stroke="#29394A"
+                    stroke-width="1.5"
+                  />
+                  <path
+                    d="M12 17V9m-3.5 3.5L12 9l3.5 3.5"
+                    fill="none"
+                    stroke="#29394A"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                <em>LANGKAH 1</em>
+              </div>
+              <h4>Ajukan konten</h4>
+              <p>
+                Penyelenggara, sponsor &amp; pemilik merek menyerahkan rencana
+                konten saat mengurus izin.
+              </p>
+            </div>
+
+            <div class="arrow">
+              <svg width="14" height="14" viewBox="0 0 14 14">
+                <path
+                  d="M2 7h9"
+                  stroke="#29394A"
+                  stroke-width="2"
+                  marker-end="url(#ah)"
+                />
+              </svg>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="pipe">
+              <div class="top">
+                <svg width="22" height="22" viewBox="0 0 24 24">
+                  <circle
+                    cx="10"
+                    cy="10"
+                    r="6.5"
+                    fill="#F2E6CC"
+                    stroke="#29394A"
+                    stroke-width="1.6"
+                  />
+                  <path
+                    d="M15 15l6 6"
+                    stroke="#29394A"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M7 10h6M10 7v6"
+                    stroke="#B8892B"
+                    stroke-width="1.6"
+                  />
+                </svg>
+                <em>LANGKAH 2</em>
+              </div>
+              <h4>Pemeriksaan awal</h4>
+              <p>Konten dicek terhadap daftar hal sensitif lintas-agama.</p>
+            </div>
+
+            <div class="arrow">
+              <svg width="14" height="14" viewBox="0 0 14 14">
+                <path
+                  d="M2 7h9"
+                  stroke="#29394A"
+                  stroke-width="2"
+                  marker-end="url(#ah)"
+                />
+              </svg>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="pipe">
+              <div class="top">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="#29394A">
+                  <circle cx="6" cy="8" r="2.6" />
+                  <circle cx="12" cy="6.5" r="3" />
+                  <circle cx="18" cy="8" r="2.6" />
+                  <path
+                    d="M1.5 17c.5-3 2.3-4.5 4.5-4.5 1 0 1.8.3 2.5.8C9.5 11.5 10.6 11 12 11s2.5.5 3.5 2.3c.7-.5 1.5-.8 2.5-.8 2.2 0 4 1.5 4.5 4.5z"
+                  />
+                </svg>
+                <em>LANGKAH 3</em>
+              </div>
+              <h4>Tinjauan panel</h4>
+              <p>Konten yang ditandai ditinjau panel lintas-agama.</p>
+            </div>
+
+            <div class="arrow">
+              <svg width="14" height="14" viewBox="0 0 14 14">
+                <path
+                  d="M2 7h9"
+                  stroke="#29394A"
+                  stroke-width="2"
+                  marker-end="url(#ah)"
+                />
+              </svg>
+            </div>
+
+            <!-- Step 4: End Decision -->
+            <div class="pipe end">
+              <div class="ok">
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" fill="#29394A" />
+                  <path
+                    d="M7 12.5l3.2 3.2L17 9"
+                    fill="none"
+                    stroke="#F3EFE6"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                <span><b>Lolos</b>Izin terbit</span>
+              </div>
+              <div class="no">
+                <svg width="18" height="18" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" fill="#A62639" />
+                  <path
+                    d="M8 8l8 8M16 8l-8 8"
+                    stroke="#F3EFE6"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+                <span><b>Ditahan</b>Izin terbit setelah konten diperbaiki</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="pic-tag">
+            PIC: <span class="placeholder">[Nama]</span>
+          </div>
+        </section>
+      </main>
+
+      <!-- ========================================================
+         FOOTER: Photo Source & Group Filename
+         ======================================================== -->
+      <footer class="footer">
+        <span class="rule"
+          >Foto latar: booth Newport, tangkapan video viral via Okezone, 11 Agu
+          2026</span
+        >
+        <span class="filename">Pancasila 35_Quiz 1_Kel [Nomor]</span>
+      </footer>
     </div>
 
-    <!-- CARD 2 -->
-    <div class="card">
-      <div class="num">2</div>
-      <h3>Dekonstruksi Arsitektur Digital</h3>
-      <p class="sub">Mengapa fenomena ini bisa marak secara sistemik?</p>
-
-      <div class="flow">
-        <div class="step">
-          <div class="ic" style="background:var(--ink)">
-            <svg width="16" height="16" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="12" rx="2" fill="#F3EFE6"/><path d="M16 10l5-3v10l-5-3z" fill="#B8892B"/></svg>
-          </div>
-          <div><h4>Konteks runtuh</h4><p>Candaan untuk audiens festival direkam &amp; tersebar; pesan tak bisa ditarik</p></div>
-        </div>
-        <div class="step">
-          <div class="ic" style="background:var(--red)">
-            <svg width="16" height="16" viewBox="0 0 24 24"><path d="M3 4h18v12H9l-5 4v-4H3z" fill="#F3EFE6"/><rect x="11" y="6.5" width="2.2" height="5.5" fill="#A62639"/><rect x="11" y="13" width="2.2" height="2" fill="#A62639"/></svg>
-          </div>
-          <div><h4>Algoritma <i>outrage</i></h4><p>Densitas emosi tinggi diprioritaskan → komentar, share &amp; quote repost eksponensial</p></div>
-        </div>
-        <div class="step">
-          <div class="ic" style="background:var(--gold)">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#201C18" stroke-width="2"><circle cx="5" cy="12" r="2.2" fill="#201C18"/><path d="M9 8a5.5 5.5 0 0 1 0 8"/><path d="M12.5 5a9.5 9.5 0 0 1 0 14"/><path d="M16 2.5a13 13 0 0 1 0 19"/></svg>
-          </div>
-          <div><h4>Echo chamber</h4><p>Akun dakwah &amp; komunitas gosip mengamplifikasi, saling validasi kemarahan</p></div>
-        </div>
-        <div class="step">
-          <div class="ic" style="background:var(--navy)">
-            <svg width="18" height="18" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3.2" fill="#F3EFE6"/><path d="M3 19c.6-3.6 3-5.4 6-5.4s5.4 1.8 6 5.4z" fill="#F3EFE6"/><circle cx="18" cy="8" r="3.6" fill="none" stroke="#B8892B" stroke-width="1.8"/><path d="M20.6 10.6L23 13" stroke="#B8892B" stroke-width="2" stroke-linecap="round"/></svg>
-          </div>
-          <div><h4>Vigilantisme digital</h4><p>Massa datangi rumah yang dikira milik MC, ternyata rumah mendiang orang tuanya: main hakim sendiri, salah sasaran</p></div>
-        </div>
-        <div class="step">
-          <div class="ic" style="background:var(--ink)">
-            <svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="none" stroke="#F3EFE6" stroke-width="1.6" stroke-dasharray="3 2"/><circle cx="12" cy="9.5" r="3" fill="#F3EFE6"/><path d="M6.5 17.5c1-3 3-4.2 5.5-4.2s4.5 1.2 5.5 4.2" fill="#F3EFE6"/></svg>
-          </div>
-          <div><h4>Filter bubble</h4><p>Tiap kubu hanya melihat narasi yang menguatkan sikapnya</p></div>
-        </div>
-      </div>
-
-      <div class="polar">
-        <div class="camp a">Ekosistem festival<small>"cuma spontanitas"</small></div>
-        <svg width="34" height="24" viewBox="0 0 34 24"><path d="M14 12H3M20 12h11" stroke="#201C18" stroke-width="1.8" marker-end="url(#ah)" /><path d="M17 3l-3 8h5l-3 10" fill="none" stroke="#A62639" stroke-width="1.8" stroke-linejoin="round"/></svg>
-        <div class="camp b">Masyarakat luas<small>"penistaan agama"</small></div>
-      </div>
-      <p style="margin:4px 0 0; font-size:7.8px; text-align:center; color:var(--navy);"><b>POLARISASI</b> — platform terus mempertemukan dua sentimen ekstrem demi <i>engagement</i></p>
-      <div class="pic-tag">PIC: <span class="placeholder">[Nama]</span></div>
-    </div>
-
-    <!-- CARD 3 -->
-    <div class="card aksi">
-      <div class="num">3</div>
-      <h3>Gagasan “Pancasila dalam Aksi”</h3>
-      <p class="sub">Satu gagasan konkret dan inovatif — bukan saran umum.</p>
-
-      <div class="aksi-top">
-        <div class="idea">
-          <svg width="34" height="34" viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.5 9-8 11-4.5-2-8-6-8-11V5z" fill="#B8892B"/><path d="M8 12l3 3 5-6" fill="none" stroke="#201C18" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <div><b>Cek Sensitivitas Konten Acara</b><span>Syarat tambahan izin keramaian: konten acara diperiksa dulu sebelum izin terbit. Kini ahli bahasa, MUI &amp; Kemenag baru dilibatkan polisi setelah kasus pecah (detikPop).</span></div>
-        </div>
-        <div class="shift">
-          <b style="color:var(--navy); letter-spacing:0.06em; font-size:7.8px;">MITIGASI BERGESER</b>
-          <div class="bar">
-            <span class="pill" style="background:var(--red-soft); color:var(--red); text-decoration:line-through;">Reaktif</span>
-            <svg width="40" height="10" viewBox="0 0 40 10"><path d="M1 5h34" stroke="#29394A" stroke-width="2" marker-end="url(#ah)"/></svg>
-            <span class="pill" style="background:var(--navy); color:var(--paper);">Preventif</span>
-          </div>
-          <div class="basis">
-            <span class="chip"><img src="assets/sila4.svg" alt="">Sila 4 · musyawarah</span>
-            <span class="chip"><img src="assets/sila5.svg" alt="">Sila 5 · keadilan</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="pipeline">
-        <div class="pipe">
-          <div class="top">
-            <svg width="22" height="22" viewBox="0 0 24 24"><path d="M5 2h10l4 4v16H5z" fill="#DDE3E9" stroke="#29394A" stroke-width="1.5"/><path d="M12 17V9m-3.5 3.5L12 9l3.5 3.5" fill="none" stroke="#29394A" stroke-width="1.8" stroke-linecap="round"/></svg>
-            <em>LANGKAH 1</em>
-          </div>
-          <h4>Ajukan konten</h4>
-          <p>Penyelenggara, sponsor &amp; pemilik merek menyerahkan rencana konten saat mengurus izin.</p>
-        </div>
-        <div class="arrow"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 7h9" stroke="#29394A" stroke-width="2" marker-end="url(#ah)"/></svg></div>
-        <div class="pipe">
-          <div class="top">
-            <svg width="22" height="22" viewBox="0 0 24 24"><circle cx="10" cy="10" r="6.5" fill="#F2E6CC" stroke="#29394A" stroke-width="1.6"/><path d="M15 15l6 6" stroke="#29394A" stroke-width="2.2" stroke-linecap="round"/><path d="M7 10h6M10 7v6" stroke="#B8892B" stroke-width="1.6"/></svg>
-            <em>LANGKAH 2</em>
-          </div>
-          <h4>Pemeriksaan awal</h4>
-          <p>Konten dicek terhadap daftar hal sensitif lintas-agama.</p>
-        </div>
-        <div class="arrow"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 7h9" stroke="#29394A" stroke-width="2" marker-end="url(#ah)"/></svg></div>
-        <div class="pipe">
-          <div class="top">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="#29394A"><circle cx="6" cy="8" r="2.6"/><circle cx="12" cy="6.5" r="3"/><circle cx="18" cy="8" r="2.6"/><path d="M1.5 17c.5-3 2.3-4.5 4.5-4.5 1 0 1.8.3 2.5.8C9.5 11.5 10.6 11 12 11s2.5.5 3.5 2.3c.7-.5 1.5-.8 2.5-.8 2.2 0 4 1.5 4.5 4.5z"/></svg>
-            <em>LANGKAH 3</em>
-          </div>
-          <h4>Tinjauan panel</h4>
-          <p>Konten yang ditandai ditinjau panel lintas-agama.</p>
-        </div>
-        <div class="arrow"><svg width="14" height="14" viewBox="0 0 14 14"><path d="M2 7h9" stroke="#29394A" stroke-width="2" marker-end="url(#ah)"/></svg></div>
-        <div class="pipe end">
-          <div class="ok">
-            <svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#29394A"/><path d="M7 12.5l3.2 3.2L17 9" fill="none" stroke="#F3EFE6" stroke-width="2.2" stroke-linecap="round"/></svg>
-            <span><b>Lolos</b>Izin terbit</span>
-          </div>
-          <div class="no">
-            <svg width="18" height="18" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" fill="#A62639"/><path d="M8 8l8 8M16 8l-8 8" stroke="#F3EFE6" stroke-width="2.2" stroke-linecap="round"/></svg>
-            <span><b>Ditahan</b>Izin terbit setelah konten diperbaiki</span>
-          </div>
-        </div>
-      </div>
-      <div class="pic-tag">PIC: <span class="placeholder">[Nama]</span></div>
-    </div>
-
-  </div>
-
-  <div class="footer">
-    <span class="rule">Foto latar: booth Newport, tangkapan video viral via Okezone, 11 Agu 2026</span>
-    <span class="filename">Pancasila 35_Quiz 1_Kel [Nomor]</span>
-  </div>
-
-</div>
-
-<script>
-  // The document title becomes the default file name in the print dialog (Save as PDF); restored afterwards.
-  function exportPdf(){
-    var originalTitle = document.title;
-    document.title = document.querySelector(".filename").textContent.trim();
-    window.addEventListener("afterprint", function restore(){
-      document.title = originalTitle;
-      window.removeEventListener("afterprint", restore);
-    });
-    window.print();
-  }
-</script>
-</body>
+    <!-- PDF Export Script (Temporarily sets document.title to filename for default print name) -->
+    <script>
+      function exportPdf() {
+        var originalTitle = document.title;
+        document.title = document.querySelector(".filename").textContent.trim();
+        window.addEventListener("afterprint", function restore() {
+          document.title = originalTitle;
+          window.removeEventListener("afterprint", restore);
+        });
+        window.print();
+      }
+    </script>
+  </body>
 </html>
