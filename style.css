@@ -95,7 +95,7 @@ svg text {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 50mm;
+  height: 70mm;
   background: url("assets/banner.png") center bottom / 100% 100% no-repeat;
   opacity: 0.4;
   pointer-events: none;
@@ -165,7 +165,7 @@ svg text {
   font-size: 8.6px;
   line-height: 1.55;
   color: var(--navy);
-  width: 66mm;
+  width: 78mm;
   flex: none;
   border-left: 1px solid var(--line);
   padding-left: 8px;
@@ -181,7 +181,7 @@ svg text {
 
 .anggota {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto auto;
   column-gap: 10px;
   row-gap: 1px;
   font-weight: 600;
@@ -193,8 +193,17 @@ svg text {
   white-space: nowrap;
 }
 
-.anggota span:nth-child(even) {
+.anggota span:nth-child(3n-1),
+.anggota span:nth-child(3n) {
   text-align: right;
+}
+
+.anggota .col-h {
+  font-weight: 700;
+  font-size: 7.3px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-transform: uppercase;
 }
 
 .placeholder {
